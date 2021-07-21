@@ -1,4 +1,4 @@
-//het_gokcandemiralp 20-07-21
+//het_gokcandemiralp 21-07-21
 #include "fitting.h"
 #include "accessories.h"
 
@@ -9,21 +9,27 @@ int main() {
 
     Mat drawing;
     vector<int> vec;
-    int gap = 10;
 
-    std::ifstream infile("1DpartList.csv");
-    int temp;
+    int piece_gap = 10;
+    int thickness = 2;
+    int scale = 3;
+
+    std::ifstream infile("1DpartList.csv");     //reading the csv file where lenght of the pieces are stored
+    int temp;                                   //every integer is stored in a seperate line
     while (infile >> temp) {
         vec.push_back(temp);
     }
 
-    quickSort(vec, 0, vec.size() - 1);
+    //creating a window for the result to be displayed at
+    drawing = Mat::zeros(Size(1440, 810), CV_8UC3);
 
+    //actually creating the visual on the window (using the integer figures from before )
+    picasso(drawing, fit(vec, 4000, piece_gap), piece_gap, scale, thickness); 
 
-    drawing = Mat::zeros(Size(1920, 1080), CV_8UC3);
-    picasso(drawing, fit(vec, 4000, gap), gap, 3, 3);
+    //opening the window
     imshow("image", drawing);
-    kpi(fit(vec, 4000, gap), 4000);
+
+    //file close trigger ( file closes when a button is pressed )
     waitKey(0);
 
 }
