@@ -1,4 +1,4 @@
-//het_gokcandemiralp 20-07-21
+//het_gokcandemiralp 21-07-21
 #include "fitting.h"
 
 using namespace std;
@@ -46,6 +46,7 @@ int nextSmallest(vector<int>& vec, int x) {
 
 vector<vector<int>> fit(vector<int> vec , int chunk , int gap) {
     vector<vector<int>> ans;
+    quickSort(vec, 0, vec.size() - 1);
     
     for (int size = vec.size(); size > 0; size = vec.size()) {
         vector<int> temp;
