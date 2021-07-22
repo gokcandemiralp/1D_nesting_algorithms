@@ -1,7 +1,6 @@
-//het_gokcandemiralp 20-07-21
+//het_gokcandemiralp 22-07-21
 #include "accessories.h"
 
-using namespace std;
 
 vector<int> randomVector(int n, int low, int up){
     vector<int> ans;
@@ -28,7 +27,7 @@ void printVector1D(vector<int> vec) {
 
 void kpi(std::vector<std::vector<int>> vec, int chunk) {
     float left = 0; float total = 0; float lines = 0;
-    for (vector<vector<int>>::const_iterator i = vec.begin(); i != vec.end(); ++i) {
+    for (vector<vector<int>>::const_iterator i = vec.begin(); (i+1) != vec.end(); ++i) {
         left = 0;
         for (std::vector<int>::const_iterator j = (*i).begin(); j != (*i).end(); ++j) {
             left += (*j);
