@@ -1,8 +1,6 @@
-//het_gokcandemiralp 21-07-21
+//het_gokcandemiralp 22-07-21
 #include "fitting.h"
 
-using namespace std;
-using namespace cv;
 
 int partition(vector<int>& vec, int start, int end){
 	int pivot = end;
@@ -89,5 +87,3 @@ void picasso(Mat drawing, vector<vector<int>> vec, int gap , int scale, int thic
         y += 2 * thicc + 1;
     } 
 }
-
-
