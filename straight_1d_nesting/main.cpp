@@ -1,9 +1,7 @@
-//het_gokcandemiralp 21-07-21
+//het_gokcandemiralp 22-07-21
 #include "fitting.h"
 #include "accessories.h"
 
-using namespace std;
-using namespace cv;
 
 int main() {
 
@@ -13,6 +11,7 @@ int main() {
     int piece_gap = 10;
     int thickness = 2;
     int scale = 3;
+    int chunk = 4000;
 
     std::ifstream infile("1DpartList.csv");     //reading the csv file where lenght of the pieces are stored
     int temp;                                   //every integer is stored in a seperate line
@@ -24,7 +23,7 @@ int main() {
     drawing = Mat::zeros(Size(1440, 810), CV_8UC3);
 
     //actually creating the visual on the window (using the integer figures from before )
-    picasso(drawing, fit(vec, 4000, piece_gap), piece_gap, scale, thickness); 
+    picasso(drawing, fit(vec, chunk, piece_gap), piece_gap, scale, thickness); 
 
     //opening the window
     imshow("image", drawing);
