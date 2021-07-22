@@ -1,10 +1,13 @@
-//het_gokcandemiralp 20-07-21
+//het_gokcandemiralp 22-07-21
 #ifndef __ACCESSORIES_H__
 #define __ACCESSORIES_H__
 
 #include <iostream>
 #include <vector>
 #include <fstream>
+
+using namespace std;
+
 
 /**
  * randomVector function takes in 3 integer variables
@@ -14,27 +17,27 @@
  * it pushes integers into the vector n many times
  * one can generate random vectors to test the fit function
  */
-std::vector<int> randomVector(int n, int low, int up); 
+vector<int> randomVector(int n, int low, int up); 
 
 /**
  * printVector2D funtion takes in a vector cantaining another vector that contains integers
  * it prints integers contained in each vector<int> in a seperate line using std::cout
  * it seperates each element with "," and each line with "\n"
  */
-void printVector2D(std::vector<std::vector<int>> vec);
+void printVector2D(vector<vector<int>> vec);
 
 /**
  * printVector1D funtion takes in a vector that contains integers
  * it prints integers in a single line using std::cout
  * it seperates each element with ","
  */
-void printVector1D(std::vector<int> vec); 
+void printVector1D(vector<int> vec); 
 
 
 /**
  * kpi - key performance indicator
  * indicates mean optimization
  */
-void kpi(std::vector<std::vector<int>> vec, int chunk);
+void kpi(vector<vector<int>> vec, int chunk);
 
 #endif
