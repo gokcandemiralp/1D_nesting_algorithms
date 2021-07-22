@@ -1,4 +1,4 @@
-//het_gokcandemiralp 20-07-21
+//het_gokcandemiralp 22-07-21
 #ifndef __FITTING_H__
 #define __FITTING_H__
 
@@ -9,6 +9,9 @@
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 
+using namespace std;
+using namespace cv;
+
 
 /**
  * partition function takes a vector<int> reference and 2 integer variables
@@ -16,7 +19,7 @@
  * It divides the vector with respect to pivot point
  * and returns the next partition point as an integer 
  */
-int partition(std::vector<int>& v, int start, int end);
+int partition(vector<int>& v, int start, int end);
 
 /**
  * logn avarage quicksort algorithm
@@ -24,7 +27,7 @@ int partition(std::vector<int>& v, int start, int end);
  * uses partition function as a helper
  * sorting is executed over the original vector
  */
-void quickSort(std::vector<int>& vec, int start, int end);
+void quickSort(vector<int>& vec, int start, int end);
 
 /**
  * binarySearch function takes in the reference of the vector that the search will be conducted, 
@@ -34,14 +37,14 @@ void quickSort(std::vector<int>& vec, int start, int end);
  * if it cannot find the exact integer it returns the next smallest integers index
  * if there is no element smaller than searched element it returns -1
  */
-int binarySearch(std::vector<int> &vec, int l, int r, int x);
+int binarySearch(vector<int> &vec, int l, int r, int x);
 
 /**
  * Tail function for the recursive binarySearch algorithm
  * It doesnt take in the boundries, instead calculates them and
  * passes them to binarySearch function
  */
-int nextSmallest(std::vector<int>& vec, int x);
+int nextSmallest(vector<int>& vec, int x);
 
 
 /**
@@ -57,7 +60,7 @@ int nextSmallest(std::vector<int>& vec, int x);
  * 5- It finds the biggest fit for the leftover area 
  * 6- If there is still leftover place it repeats the step 5
  */
-std::vector<std::vector<int>> fit(std::vector<int> vec, int chunk, int gap);
+vector<vector<int>> fit(vector<int> vec, int chunk, int gap);
 
 /**
  * picasso() function is the function that visualizes the fitting algorihms result
@@ -68,7 +71,7 @@ std::vector<std::vector<int>> fit(std::vector<int> vec, int chunk, int gap);
  * thicc is also for determining the distance between each line
  * it uses opencv to visulize items
  */
-void picasso(cv::Mat drawing, std::vector<std::vector<int>> vec, int gap, int scale,  int thicc);
+void picasso(Mat drawing, vector<vector<int>> vec, int gap, int scale,  int thicc);
 
 
 #endif
