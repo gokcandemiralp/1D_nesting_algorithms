@@ -77,14 +77,32 @@ void quickSort(vector<quad>& vec, int start, int end) {
     }
 }
 
+vector<quad>::iterator closestSlope(vector<quad>& vec, quad a) {
+    int D1 = a.L1 - (a.L2 + a.X);
+    int D2 , temp;
+    int lowest = INT_MAX;
+    vector<quad>::iterator ans;
+    quad b;
+
+    for (vector<quad>::iterator e = (vec.end() - 1); vec.size()>0 ;--e) {
+        quad b = (*e);
+        D2 = -b.X;
+        temp = abs(abs(D1) - abs(D2));
+        if (temp < lowest) { lowest = temp; ans = e; }
+        if (e == vec.begin()) { break; }
+    }
+    
+    return ans;
+}
+
 vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap) {
     quickSort(vec, 0, vec.size() - 1);
     
     vector<vector<quad>> ans;
     int total = 0;
-    auto e = (vec.end() - 1);
     quad a = {0,0,0};
     quad b;
+    auto e = closestSlope(vec, a);
 
     for (int size = vec.size(); size > 0; size = vec.size()) {
         vector<quad> temp;
@@ -97,8 +115,8 @@ vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap) {
             temp.push_back(b);
             vec.pop_back();
             if (vec.end() == vec.begin()) { break; }
-            e = (vec.end() - 1);
             a = b;
+            e = closestSlope(vec, a);
             b = (*e);
             rotate(a, b);
         }
