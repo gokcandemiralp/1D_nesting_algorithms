@@ -34,6 +34,8 @@ int partition(vector<quad>& vec, int start, int end);
 
 void quickSort(vector<quad>& vec, int start, int end);
 
+vector<quad>::iterator closestSlope(vector<quad>& vec, quad a, quad b);
+
 vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap);
 
 void donatello(Mat drawing, vector<vector<quad>> vec, int gap, int thickness);
