@@ -8,3 +8,7 @@ vector<quad> randomQuad(int n, int low, int up) {
     }
     return ans;
 }
+
+void kpi(vector<vector<quad>> vec, int chunk) {
+
+}
