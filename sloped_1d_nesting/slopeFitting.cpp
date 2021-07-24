@@ -1,4 +1,4 @@
-//het_gokcandemiralp 23-07-21
+//het_gokcandemiralp 24-07-21
 #include "slopeFitting.h"
 
 
@@ -88,6 +88,7 @@ vector<quad>::iterator closestSlope(vector<quad>& vec, quad a) {
         quad b = (*e);
         D2 = -b.X;
         temp = abs(abs(D1) - abs(D2));
+        if (temp == 0) { lowest = temp; return e; }
         if (temp < lowest) { lowest = temp; ans = e; }
         if (e == vec.begin()) { break; }
     }
