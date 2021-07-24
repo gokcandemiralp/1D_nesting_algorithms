@@ -11,4 +11,10 @@ using namespace std;
 
 vector<quad> randomQuad(int n, int low, int up);
 
+/**
+ * kpi - key performance indicator
+ * indicates mean optimization
+ */
+void kpi(vector<vector<quad>> vec, int chunk);
+
 #endif
