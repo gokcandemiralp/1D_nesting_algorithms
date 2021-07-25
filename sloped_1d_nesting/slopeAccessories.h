@@ -15,6 +15,8 @@ vector<quad> randomQuad(int n, int low, int up);
  * kpi - key performance indicator
  * indicates mean optimization
  */
-void kpi(vector<vector<quad>> vec, int chunk);
+void kpi(vector<vector<quad>> vec, int chunk, int gap);
+
+vector<vector<quad>> badFit(vector<quad> vec, int chunk, int gap);
 
 #endif
