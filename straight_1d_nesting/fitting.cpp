@@ -52,7 +52,7 @@ vector<vector<int>> fit(vector<int> vec , int chunk , int gap) {
         auto e = (vec.end()-1);
 
         // It stacks the integers until it doesnt fit anymore starting from the greatest
-        for (; size > 0 && (total + *e) < chunk; size = vec.size(), e = (vec.end() - 1)) {
+        for (; size > 0 && (total + *e) <= chunk; size = vec.size(), e = (vec.end() - 1)) {
             total = total+*e + gap;
             temp.push_back(*e);
             vec.pop_back();
