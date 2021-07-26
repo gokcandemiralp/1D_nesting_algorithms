@@ -1,4 +1,4 @@
-//het_gokcandemiralp 23-07-21
+//het_gokcandemiralp 26-07-21
 #ifndef __SLOPEFITTING_H__
 #define __SLOPEFITTING_H__
 
@@ -34,7 +34,11 @@ int partition(vector<quad>& vec, int start, int end);
 
 void quickSort(vector<quad>& vec, int start, int end);
 
-vector<quad>::iterator closestSlope(vector<quad>& vec, quad a, quad b);
+int binarySearch(vector<quad>& vec, int l, int r, int x);
+
+int nextSmallest(vector<quad>& vec, quad a , int total);
+
+vector<quad>::iterator closestSlope(vector<quad>& vec, quad a);
 
 vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap);
 
