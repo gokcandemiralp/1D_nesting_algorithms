@@ -1,4 +1,4 @@
-//het_gokcandemiralp 24-07-21
+//het_gokcandemiralp 26-07-21
 #include "slopeFitting.h"
 
 
@@ -41,6 +41,7 @@ int offset(quad a, quad b, int gap) {
     int D1 = a.L1 - (a.L2 + a.X);
     int D2 = -b.X;
     (D1 - D2 > 0) ? Offset = a.L1 + gap : Offset = a.X + a.L2 - b.X + gap;
+
     return Offset;
 }
 
@@ -77,6 +78,36 @@ void quickSort(vector<quad>& vec, int start, int end) {
     }
 }
 
+int binarySearch(vector<quad>& vec, int l, int r, int x) {
+    if (r >= l) {
+        int mid = l + (r - l) / 2;
+        if (2*x == vec[mid].L1 + vec[mid].L2)
+            return mid;
+        else if (mid == 0)
+            return -1;
+        else if (2 * x < vec[mid].L1 + vec[mid].L2)
+            return binarySearch(vec, l, mid - 1, x);
+        else
+            return binarySearch(vec, mid + 1, r, x);
+    }
+    return r;
+}
+
+int nextSmallest(vector<quad>& vec, quad a , int total) {
+    int ans;
+    quad b;
+    ans = binarySearch(vec, 0, vec.size() - 1, total);
+
+    while (ans >= 0) {
+        b = vec[ans];
+        rotate(a, b);
+        if ((total - rightMost(a, vec[ans], 0)) > 0) { break; }
+        --ans;
+    }
+
+    return ans;
+}
+
 vector<quad>::iterator closestSlope(vector<quad>& vec, quad a) {
     int D1 = a.L1 - (a.L2 + a.X);
     int D2 , temp;
@@ -111,10 +142,10 @@ vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap) {
         b = (*e);
         rotate(a, b);
 
-        for (; size > 0 && (total + rightMost(a, b, gap)) < chunk; size = vec.size()) {
+        for (; size > 0 && (total + rightMost(a, b, gap)) <= chunk; size = vec.size()) {
             total += rightMost(a, b, gap);
             temp.push_back(b);
-            vec.pop_back();
+            vec.erase(e);
             if (vec.end() == vec.begin()) { break; }
             a = b;
             e = closestSlope(vec, a);
@@ -122,9 +153,17 @@ vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap) {
             rotate(a, b);
         }
 
+        for (int index = nextSmallest(vec, a, (chunk - total)); size > 0 && index != -1; size = vec.size(), index = nextSmallest(vec, a, (chunk - total))) {
+            b = vec[index];
+            rotate(a, b);
+            total += rightMost(a, b, gap);
+            temp.push_back(vec[index]);
+            vec.erase(vec.begin() + index);
+            a = b;
+            e = closestSlope(vec, a);
+        }
         ans.push_back(temp);
     }
-
     return ans;
 }
 
