@@ -1,8 +1,9 @@
-// het_gokcandemiralp 25-07-21
+// het_gokcandemiralp 26-07-21
 #include "slopeAccessories.h"
 
 vector<quad> randomQuad(int n, int low, int up) {
     vector<quad> ans;
+    ans.push_back(quad{0,1436,1436});
     for (int i = 0; i < n; ++i) {
         ans.push_back(quad{ (rand() % (up - low)), (rand() % (up - low) + low), (rand() % (up - low) + low) });
     }
@@ -51,7 +52,7 @@ vector<vector<quad>> badFit(vector<quad> vec, int chunk, int gap) {
         total = 0;
         b = (*e);
 
-        for (; size > 0 && (total + rightMost(a, b, gap)) < chunk; size = vec.size()) {
+        for (; size > 0 && (total + rightMost(a, b, gap)) <= chunk; size = vec.size()) {
             total += rightMost(a, b, gap);
             temp.push_back(b);
             vec.pop_back();
