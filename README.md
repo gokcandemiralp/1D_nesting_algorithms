@@ -1,2 +1,2 @@
 # nesting_algorithms
-C++ based various dimensional nesting algorithms
+C++ based one dimensional nesting algorithms
