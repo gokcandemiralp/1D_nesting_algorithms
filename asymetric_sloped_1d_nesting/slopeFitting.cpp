@@ -1,4 +1,4 @@
-//het_gokcandemiralp 26-07-21
+//het_gokcandemiralp 27-07-21
 #include "slopeFitting.h"
 
 
@@ -12,27 +12,6 @@ void flip_horizontal(quad &q){
 
 void flip_vertical(quad& q) {
     q.X = q.L1 - q.L2 - q.X;
-}
-
-void rotate(quad a, quad &b) {
-    int D1 = a.L1 - (a.L2 + a.X);
-    int D2 = -b.X;
-    int D3 = b.L1 - b.X - b.L2;
-    
-    if (abs(abs(D1) - abs(D2)) < abs(abs(D1) - abs(D3))) {
-        if (abs(D1) + abs(D2) == abs(D1-D2)) {
-            flip_horizontal(b);
-        }
-    }
-    else {
-        if (abs(D1) + abs(D3) == abs(D1 + D3)) {
-            flip_vertical(b);
-            flip_horizontal(b);
-        }
-        else{
-            flip_vertical(b);
-        }
-    }
 }
 
 
@@ -100,7 +79,6 @@ int nextSmallest(vector<quad>& vec, quad a , int total) {
 
     while (ans >= 0) {
         b = vec[ans];
-        rotate(a, b);
         if ((total - rightMost(a, vec[ans], 0)) > 0) { break; }
         --ans;
     }
@@ -118,7 +96,7 @@ vector<quad>::iterator closestSlope(vector<quad>& vec, quad a) {
     for (vector<quad>::iterator e = (vec.end() - 1); vec.size()>0 ;--e) {
         quad b = (*e);
         D2 = -b.X;
-        temp = abs(abs(D1) - abs(D2));
+        temp = abs(D1 - D2);
         if (temp == 0) { lowest = temp; return e; }
         if (temp < lowest) { lowest = temp; ans = e; }
         if (e == vec.begin()) { break; }
@@ -142,7 +120,6 @@ vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap) {
         a = { 0,0,0 };
         e = closestSlope(vec, a);
         b = (*e);
-        rotate(a, b);
 
         for (; size > 0 && (total + rightMost(a, b, gap)) <= chunk; size = vec.size()) {
             total += rightMost(a, b, gap);
@@ -152,12 +129,10 @@ vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap) {
             a = b;
             e = closestSlope(vec, a);
             b = (*e);
-            rotate(a, b);
         }
 
         for (int index = nextSmallest(vec, a, (chunk - total)); size > 0 && index != -1; size = vec.size(), index = nextSmallest(vec, a, (chunk - total))) {
             b = vec[index];
-            rotate(a, b);
             total += rightMost(a, b, gap);
             temp.push_back(vec[index]);
             vec.erase(vec.begin() + index);
