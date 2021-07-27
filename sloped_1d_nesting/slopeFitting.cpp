@@ -110,7 +110,7 @@ int nextSmallest(vector<quad>& vec, quad a , int total) {
 
 vector<quad>::iterator closestSlope(vector<quad>& vec, quad a) {
     int D1 = a.L1 - (a.L2 + a.X);
-    int D2 , temp;
+    int D2 , D3, temp;
     int lowest = INT_MAX;
     vector<quad>::iterator ans;
     quad b;
@@ -118,7 +118,8 @@ vector<quad>::iterator closestSlope(vector<quad>& vec, quad a) {
     for (vector<quad>::iterator e = (vec.end() - 1); vec.size()>0 ;--e) {
         quad b = (*e);
         D2 = -b.X;
-        temp = abs(abs(D1) - abs(D2));
+        D3 = b.L1 - b.X - b.L2;
+        (abs(abs(D1) - abs(D2)) < abs(abs(D1) - abs(D3))) ? temp = abs(abs(D1) - abs(D2)) : temp = abs(abs(D1) - abs(D3));
         if (temp == 0) { lowest = temp; return e; }
         if (temp < lowest) { lowest = temp; ans = e; }
         if (e == vec.begin()) { break; }
@@ -134,11 +135,13 @@ vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap) {
     int total = 0;
     quad a = {0,0,0};
     quad b;
-    auto e = closestSlope(vec, a);
+    vector<quad>::iterator e;
 
     for (int size = vec.size(); size > 0; size = vec.size()) {
         vector<quad> temp;
         total = 0;
+        a = { 0,0,0 };
+        e = closestSlope(vec, a);
         b = (*e);
         rotate(a, b);
 
@@ -168,12 +171,14 @@ vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap) {
 }
 
 void donatello(Mat drawing, vector<vector<quad>> vec, int gap, int thickness) {
-    int Offset = 0;
+    int Offset = 5;
     auto i = vec.begin();
     int Y = 5;
+    quad A = {0,0,0};
     
     for (; i != vec.end(); ++i) {
         auto j = (*i).begin();
+        if (j != (*i).end() && (*j).X < 0) { Offset -= (*j).X;}
         for (; j != (*i).end(); ++j) {
             quad a = (*j);
             vector<Point> poligon = { Point(0 + Offset,Y),Point(a.X + Offset, thickness + Y),Point(a.X + (*j).L2 + Offset,thickness + Y),Point(a.L1 + Offset, Y) };
@@ -185,6 +190,6 @@ void donatello(Mat drawing, vector<vector<quad>> vec, int gap, int thickness) {
             }
         }
         Y += 2 * thickness;
-        Offset = 0;
+        Offset = 5;
     }
 }
