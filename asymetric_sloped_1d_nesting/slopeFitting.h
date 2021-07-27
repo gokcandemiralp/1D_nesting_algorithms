@@ -24,8 +24,6 @@ void flip_horizontal(quad& q);
 
 void flip_vertical(quad& q);
 
-void rotate(quad a, quad& b);
-
 int offset(quad a, quad b, int gap);
 
 int rightMost(quad a, quad b, int gap);
