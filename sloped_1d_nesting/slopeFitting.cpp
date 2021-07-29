@@ -1,4 +1,4 @@
-//het_gokcandemiralp 26-07-21
+//het_gokcandemiralp 29-07-21
 #include "slopeFitting.h"
 
 
@@ -141,9 +141,9 @@ vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap) {
         vector<quad> temp;
         total = 0;
         a = { 0,0,0 };
-        e = closestSlope(vec, a);
+        e = closestSlope(vec, a); // find a piece with a fitting slope 
         b = (*e);
-        rotate(a, b);
+        rotate(a, b); //create a quad piece with 0 lenght and with no slope as the first piece
 
         for (; size > 0 && (total + rightMost(a, b, gap)) <= chunk; size = vec.size()) {
             total += rightMost(a, b, gap);
@@ -151,15 +151,15 @@ vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap) {
             vec.erase(e);
             if (vec.end() == vec.begin()) { break; }
             a = b;
-            e = closestSlope(vec, a);
+            e = closestSlope(vec, a); // find a piece with a fitting slope 
             b = (*e);
-            rotate(a, b);
+            rotate(a, b); // flip that piece so that it fits as perfect as possible
         }
 
         for (int index = nextSmallest(vec, a, (chunk - total)); size > 0 && index != -1; size = vec.size(), index = nextSmallest(vec, a, (chunk - total))) {
-            b = vec[index];
+            b = vec[index]; //finds an index with the biggest piece that can fit the remaining space ( until it doesnt fit anymore )
             rotate(a, b);
-            total += rightMost(a, b, gap);
+            total += rightMost(a, b, gap); //checks how much space have left
             temp.push_back(vec[index]);
             vec.erase(vec.begin() + index);
             a = b;
