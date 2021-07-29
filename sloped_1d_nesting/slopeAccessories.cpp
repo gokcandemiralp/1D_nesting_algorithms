@@ -1,11 +1,10 @@
-// het_gokcandemiralp 27-07-21
+// het_gokcandemiralp 28-07-21
 #include "slopeAccessories.h"
 
-vector<quad> randomQuad(int n, int low, int up) {
+vector<quad> randomQuad(int n, int low, int up, int thickness) {
     vector<quad> ans;
-    ans.push_back(quad{0,1436,1436});
     for (int i = 0; i < n; ++i) {
-        ans.push_back(quad{ (rand() % (up - low)-low), (rand() % (up - low) + low), (rand() % (up - low) + low) });
+        ans.push_back(quad{ (rand() % (6 * thickness) - (3 * thickness)), (rand() % (up - low) + low), (rand() % (up - low) + low) });
     }
     return ans;
 }
