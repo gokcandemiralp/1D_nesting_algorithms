@@ -1,4 +1,4 @@
-//het_gokcandemiralp 26-07-21
+//het_gokcandemiralp 29-07-21
 #include "slopeFitting.h"
 #include "slopeAccessories.h"
 
@@ -6,12 +6,15 @@ int main() {
 
     Mat drawing;
     vector<quad> vec;
+    int thickness = 24;
+    int chunk = 1440;
+    int gap = 4;
 
-    vec= randomQuad(180, 30, 90);
+    vec= randomQuad(178, 30, 90, thickness);
 
     drawing = Mat::zeros(Size(1600, 900), CV_8UC3);
 
-    donatello(drawing, fit(vec,1440,4), 4, 20);
+    donatello(drawing, fit(vec,chunk,gap), gap, thickness);
     imshow("image", drawing);
     waitKey(0);
 
