@@ -1,4 +1,4 @@
-//het_gokcandemiralp 29-07-21
+//het_gokcandemiralp 28-07-21
 #include "slopeFitting.h"
 
 
@@ -93,7 +93,7 @@ int binarySearch(vector<quad>& vec, int l, int r, int x) {
     return r;
 }
 
-int nextSmallest(vector<quad>& vec, quad a , int total) {
+int nextSmallest(vector<quad>& vec, quad a , int total, int gap) {
     int ans;
     quad b;
     ans = binarySearch(vec, 0, vec.size() - 1, total);
@@ -101,7 +101,7 @@ int nextSmallest(vector<quad>& vec, quad a , int total) {
     while (ans >= 0) {
         b = vec[ans];
         rotate(a, b);
-        if ((total - rightMost(a, vec[ans], 0)) > 0) { break; }
+        if ((total - rightMost(a, vec[ans], gap)) > 0) { break; }
         --ans;
     }
 
@@ -133,13 +133,14 @@ vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap) {
     
     vector<vector<quad>> ans;
     int total = 0;
+    bool signal = true;
     quad a = {0,0,0};
     quad b;
     vector<quad>::iterator e;
 
     for (int size = vec.size(); size > 0; size = vec.size()) {
         vector<quad> temp;
-        total = 0;
+        total = -gap;  // this line prevents unnecessary gap in the begining
         a = { 0,0,0 };
         e = closestSlope(vec, a); // find a piece with a fitting slope 
         b = (*e);
@@ -156,7 +157,7 @@ vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap) {
             rotate(a, b); // flip that piece so that it fits as perfect as possible
         }
 
-        for (int index = nextSmallest(vec, a, (chunk - total)); size > 0 && index != -1; size = vec.size(), index = nextSmallest(vec, a, (chunk - total))) {
+        for (int index = nextSmallest(vec, a, (chunk - total), gap); size > 0 && index != -1; size = vec.size(), index = nextSmallest(vec, a, (chunk - total), gap)) {
             b = vec[index]; //finds an index with the biggest piece that can fit the remaining space ( until it doesnt fit anymore )
             rotate(a, b);
             total += rightMost(a, b, gap); //checks how much space have left
