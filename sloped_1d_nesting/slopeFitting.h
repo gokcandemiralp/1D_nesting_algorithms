@@ -92,7 +92,7 @@ int binarySearch(vector<quad>& vec, int l, int r, int x);
  * It doesnt take in the boundries, instead calculates them and
  * passes them to binarySearch function
  */
-int nextSmallest(vector<quad>& vec, quad a , int total);
+int nextSmallest(vector<quad>& vec, quad a , int total, int gap);
 
 /**
  * closestSlope() function finds the quad with the closest slope 
