@@ -1,4 +1,4 @@
-//het_gokcandemiralp 28-07-21
+//het_gokcandemiralp 01-08-21
 #include "slopeFitting.h"
 
 
@@ -47,20 +47,19 @@ int offset(quad a, quad b, int gap) {
 
 int rightMost(quad a, quad b, int gap) {
     int Offset = 0;
-    int rightMost = 0;
+    int RightMost = 0;
     int D1 = a.L1 - (a.L2 + a.X);
     int D2 = -b.X;
     (D1 - D2 > 0) ? Offset = a.L1 + gap : Offset = a.X + a.L2 - b.X + gap;
-    (b.L1 > b.X + b.L2) ? rightMost = Offset + b.L1 : rightMost = Offset + b.X + b.L2;
-    (a.L1 > a.X + a.L2) ? rightMost -= a.L1 : rightMost -= (a.X + a.L2);
+    (b.L1 > b.X + b.L2) ? RightMost = Offset + b.L1 : RightMost = Offset + b.X + b.L2;
+    (a.L1 > a.X + a.L2) ? RightMost -= a.L1 : RightMost -= (a.X + a.L2);
 
-    return rightMost;
+    return RightMost;
 }
 
-int partition(vector<quad>& vec, int start, int end) {
-    int pivot = end;
+int partition(vector<quad>& vec, int start, int pivot) { //pivot is the upper boundary
     int j = start;
-    for (int i = start; i < end; ++i) {
+    for (int i = start; i < pivot; ++i) {
         if ((vec[i].L1 + vec[i].L2) < (vec[pivot].L1 + vec[pivot].L2)) {
             swap(vec[i], vec[j]);
             ++j;
@@ -104,7 +103,6 @@ int nextSmallest(vector<quad>& vec, quad a , int total, int gap) {
         if ((total - rightMost(a, vec[ans], gap)) > 0) { break; }
         --ans;
     }
-
     return ans;
 }
 
@@ -124,7 +122,6 @@ vector<quad>::iterator closestSlope(vector<quad>& vec, quad a) {
         if (temp < lowest) { lowest = temp; ans = e; }
         if (e == vec.begin()) { break; }
     }
-    
     return ans;
 }
 
@@ -164,7 +161,6 @@ vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap) {
             temp.push_back(vec[index]);
             vec.erase(vec.begin() + index);
             a = b;
-            e = closestSlope(vec, a);
         }
         ans.push_back(temp);
     }
@@ -173,12 +169,12 @@ vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap) {
 
 void donatello(Mat drawing, vector<vector<quad>> vec, int gap, int thickness) {
     int Offset = 5;
-    auto i = vec.begin();
+    vector<vector<quad>>::iterator i = vec.begin();
     int Y = 5;
     quad A = {0,0,0};
     
     for (; i != vec.end(); ++i) {
-        auto j = (*i).begin();
+        vector<quad>::iterator j = (*i).begin();
         if (j != (*i).end() && (*j).X < 0) { Offset -= (*j).X;}
         for (; j != (*i).end(); ++j) {
             quad a = (*j);
