@@ -107,6 +107,10 @@ vector<vector<quad>> fit(vector<quad> vec, int chunk, int gap);
 
 /**
  * donatello() function is the function that visualizes the fitting algorihms result
+ * it takes in a gap parameter to leave some space between elements
+ * integer thickness is for determining the thickness of the items
+ * thickness is also for determining the distance between each line
+ * it uses opencv to visulize items
  */
 void donatello(Mat drawing, vector<vector<quad>> vec, int gap, int thickness);
 
